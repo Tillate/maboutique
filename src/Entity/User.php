@@ -6,6 +6,8 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -157,5 +159,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->lastname = $lastname;
 
         return $this;
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('firstname', new Assert\Length([
+            'min' => 2,
+            'max' => 30,
+            'minMessage' => 'Votre prénom doit contenir au minimum 2 caractères.',
+            'maxMessage' => 'Votre prénom doit contenir au maximum 30 caractères.',
+        ]));
+        $metadata->addPropertyConstraint('lastname', new Assert\Length([
+            'min' => 2,
+            'max' => 30,
+            'minMessage' => 'Votre nom doit contenir au minimum 2 caractères.',
+            'maxMessage' => 'Votre nom doit contenir au maximum 30 caractères.',
+        ]));
+        $metadata->addPropertyConstraint('email', new Assert\Email([
+            'message' => "L'email {{ value }} n'est pas un email valide.",
+        ]));
+        
     }
 }
