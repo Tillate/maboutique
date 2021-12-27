@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Form\ChangePasswordType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,6 +38,8 @@ class AccountPasswordController extends AbstractController
             $old_password = $form->get('old_password')->getData();
 
             if ($passwordHasher->isPasswordValid($user, $old_password)) {
+                $user = $form->getData();
+
                 $new_password = $form->get('new_password')->getData();
                 $password = $passwordHasher->hashPassword($user, $new_password);
 
