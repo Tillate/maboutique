@@ -28,7 +28,6 @@ class ProductController extends AbstractController
      */
     public function index(Request $request): Response
     {
-        $products = $this->entityManager->getRepository(Product::class)->findAll();
 
         $search = new Search();
         $form = $this->createForm(SearchType::class, $search);
@@ -36,6 +35,8 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $products = $this->entityManager->getRepository(Product::class)->findWithSearch($search);
+        } else {
+            $products = $this->entityManager->getRepository(Product::class)->findAll();
         }
 
         return $this->render('product/index.html.twig', [
