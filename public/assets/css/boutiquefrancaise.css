@@ -2,12 +2,12 @@ body {
     position: relative;
 }
 
-a {
+/* a {
     color: inherit;
 }
 a:hover {
     color: inherit;
-}
+} */
 .navbar-item-custom, .navbar-item-custom a{
     color: white;
 }
