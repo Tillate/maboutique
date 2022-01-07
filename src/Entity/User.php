@@ -10,6 +10,8 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
+use App\Entity\Order;
+
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -153,6 +155,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getFullName(): ?string
+    {
+        return $this->getFirstname().' '.$this->getLastname();
     }
 
     public function getFirstname(): ?string
