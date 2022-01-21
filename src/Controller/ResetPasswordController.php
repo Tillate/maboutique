@@ -50,7 +50,7 @@ class ResetPasswordController extends AbstractController
                 ]);
 
                 $content = "Bonjour ".$user->getFirstName()."<br>Vous avez demandé à réinitialiser votre mot de passe sur le site Ma Boutique.<br><br>";
-                $content .="Merci de bien vouloir cliquer sur le lien suivant pour <a href='".$url."'>mettre à jour votre mot de passe</a>.";
+                $content .="Merci de bien vouloir cliquer sur le lien suivant pour <a href='".$url."'>mettre a jour votre mot de passe</a>.";
 
                 $mail = new Mail();
                 $mail->send($user->getEmail(), $user->getFirstname().' '.$user->getLastName(), 'Réinitialiser votre mot de passe sur Ma Boutique', $content);
@@ -76,7 +76,7 @@ class ResetPasswordController extends AbstractController
 
         //Vérifier si les createdAt = now - 1h
         $now = new DateTime();
-        if ($now > $reset_password->getCreatedAt()->modifiy('+ 1 hour')) {
+        if ($now > $reset_password->getCreatedAt()->modify('+ 1 hour')) {
             $this->addFlash('notice', 'Votre demande de mot de passe à expiré. Merci de la renouveller.');
             return $this->redirectToRoute('reset_password');
         }
